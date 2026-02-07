@@ -1,14 +1,10 @@
-from sqlalchemy import create_engine, Column, Integer, String, DateTime, Text, ForeignKey, Enum, Float
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy import Column, Integer, String, DateTime, Text, ForeignKey, Enum, Float
+from sqlalchemy.orm import relationship
 from datetime import datetime
 import enum
 
-# Database setup
-DATABASE_URL = "sqlite:///./booking.db"
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+# Import database components from database.py
+from database import Base, SessionLocal, engine, get_db
 
 
 class SeatStatus(enum.Enum):
@@ -98,13 +94,5 @@ class Booking(Base):
 
 # Create all tables
 def init_db():
+    """Initialize database by creating all tables."""
     Base.metadata.create_all(bind=engine)
-
-
-# Dependency to get DB session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()

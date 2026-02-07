@@ -10,7 +10,7 @@ app = FastAPI(title="Cinema/Concert Booking API")
 # CRITICAL: CORS must be added IMMEDIATELY after app creation
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Vite and Create React App
+    allow_origins=["http://localhost:5173", "http://localhost:3000"],  # Vite and Create React App
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
