@@ -12,6 +12,7 @@ if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
 # Create SQLAlchemy engine
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
+    connect_args={"sslmode": "require"}, # SSL connect
     pool_pre_ping=True,  # Enable connection health checks
     pool_size=5,         # Connection pool size
     max_overflow=10      # Maximum overflow connections
