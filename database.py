@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Supabase PostgreSQL Configuration
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:qaxgon-xuZhyd-8fuhde@db.magdqoyapviqwathvvit.supabase.co:5432/postgres"
+SQLALCHEMY_DATABASE_URL = "postgresql://postgres.magdqoyapviqwathvvit:qaxgon-xuZhyd-8fuhde@aws-1-eu-west-1.pooler.supabase.com:6543/postgres"
 
 # Fix for postgres:// vs postgresql:// compatibility (Render, Heroku, etc.)
 if SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
