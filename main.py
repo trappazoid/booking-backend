@@ -15,7 +15,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+if not os.path.exists("static"):
+    os.makedirs("static")
 # Mount static files directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -30,6 +31,7 @@ def startup_event():
     init_db()
     print("✅ Database initialized successfully")
     print("🚀 Server running on http://localhost:8000")
+    
 
 
 @app.get("/")
