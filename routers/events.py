@@ -238,3 +238,32 @@ async def create_event(
     
     print(f"✅ Event '{title}' created successfully")
     return EventResponse.from_orm(event)
+
+
+@router.delete("/{event_id}")
+def delete_event(event_id: int, token: str, db: Session = Depends(get_db)):
+    """
+    Admin-only endpoint - Delete event by ID
+    """
+    print(f"🗑️ Deleting event with ID: {event_id}")
+
+    # If this admin
+    user = get_current_user(token, db)
+    if user.role != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+
+    # 2. find event
+    event = db.query(Event).filter(Event.id == event_id).first()
+    if not event:
+        raise HTTPException(status_code=404, detail="Event not found")
+
+    # 3. delete event
+    try:
+        db.delete(event)
+        db.commit()
+        print(f"✅ Event {event_id} deleted successfully")
+        return {"message": "Event deleted successfully"}
+    except Exception as e:
+        db.rollback()
+        print(f"❌ Error deleting event: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
